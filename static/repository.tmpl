@@ -1,0 +1,5 @@
+import org.springframework.data.jpa.repository.{{ .Repository }};
+import {{.groupId}}.{{.artifactId}}.Models.Entity.{{.class}};
+@Repository
+public interface {{ .class }}Repository extends {{ .Repository }}<{{ .class }}, {{ .typeClass}}>{}
+{{end}}
