@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+{{if eq .TypeId 3}}
+import java.util.UUID;
+{{end}}
 
 @Entity
 @NoArgsConstructor
@@ -11,8 +14,12 @@ import lombok.AllArgsConstructor;
 @Getter
 @Setter
 @Builder
-class {{ .class }}{
+public class {{.Name}} {
     @Id
-    private {{ .type }} id;
+    {{if eq .TypeId 3}}
+    @GenerationValue(strategy = GenerationType.UUID)
+    {{else}}
+    @GenerationValue(strategy = GenerationType.IDENTITY)
+    {{end}}
+    private {{if eq .TypeId 1}}int{{else if eq .TypeId 2}}long{{else if eq .TypeId 3}}UUID{{end}} id;
 }
-{{end}}
