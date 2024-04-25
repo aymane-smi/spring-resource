@@ -1,9 +1,12 @@
-import org.springframework.web.bind.annotation.Service;
+import org.springframework.stereotype.Service;
+
+import {{ .groupId }}.{{ .artifactId }}.controllers.{{ .class }};
+import {{ .groupId }}.{{ .artifactId }}.services.{{ .class }}Service;
 
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public {{.class}}ServiceImpl {
+public {{ .class }}ServiceImpl implements {{ .class }}Service{
     private {{ .class }}Repository {{.class}}Repository;
 }
 {{end}}
