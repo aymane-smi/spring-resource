@@ -1,4 +1,6 @@
-import org.springframework.data.jpa.repository.{{ .Repository }};
-import {{.groupId}}.{{.artifactId}}.Models.Entity.{{.class}};
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Repositories;
+import org.springframework.data.jpa.repository.{{.SharedEntity.RepoType}};
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Models.{{.SharedEntity.Name}};
+import java.util.{{if eq .SharedEntity.TypeId 1}}Integer{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}}
 @Repository
-public interface {{ .class }}Repository extends {{ .Repository }}<{{ .class }}, {{ .typeClass}}>{}
+public interface {{.SharedEntity.Name}}Repository extends {{.SharedEntity.RepoType}}<{{.SharedEntity.Name}}, {{if eq .SharedEntity.TypeId 1}}Integer{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}}>{}

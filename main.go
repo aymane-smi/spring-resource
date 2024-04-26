@@ -1,7 +1,22 @@
 package main
 
-import "github.com/aymane-smi/spring-resource/utils"
+import (
+	service "github.com/aymane-smi/spring-resource/services"
+	"github.com/aymane-smi/spring-resource/structs"
+)
 
 func main() {
-	utils.GenerateEntity("User", 3)
+	shared := &structs.Shared{
+		SharedEntity: structs.Entity{
+			Name:     "User",
+			TypeId:   1,
+			RepoType: "JpaRepository",
+		},
+		SharedPom: structs.Pom{
+			GroupId:    "com.example",
+			ArtifactId: "demo",
+		},
+	}
+	service.GenerateRepository(*shared)
+	service.GenerateEntity(*shared)
 }
