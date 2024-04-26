@@ -1,6 +1,6 @@
 package structs
 
 type Pom struct {
-	groupId    string
-	artifactId string
+	GroupId    string
+	ArtifactId string
 }

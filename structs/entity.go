@@ -7,6 +7,6 @@ const (
 )
 
 type Entity struct {
-	name   string
-	typeId int
+	Name   string
+	TypeId int
 }

@@ -1,12 +1,12 @@
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Models;
+
 import jakarta.persistence.Entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-{{if eq .TypeId 3}}
-import java.util.UUID;
-{{end}}
+import lombok.AllArgsConstructor;{{if eq .SharedEntity.TypeId 3}}
+import java.util.UUID;{{end}}
 
 @Entity
 @NoArgsConstructor
@@ -14,12 +14,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class {{.Name}} {
-    @Id
-    {{if eq .TypeId 3}}
-    @GenerationValue(strategy = GenerationType.UUID)
-    {{else}}
-    @GenerationValue(strategy = GenerationType.IDENTITY)
-    {{end}}
-    private {{if eq .TypeId 1}}int{{else if eq .TypeId 2}}long{{else if eq .TypeId 3}}UUID{{end}} id;
+public class {{.SharedEntity.Name}} {
+    @Id{{if eq .SharedEntity.TypeId 3}}
+    @GenerationValue(strategy = GenerationType.UUID){{else}}
+    @GenerationValue(strategy = GenerationType.IDENTITY){{end}}
+    private {{if eq .SharedEntity.TypeId 1}}int{{else if eq .SharedEntity.TypeId 2}}long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}} id;
 }
