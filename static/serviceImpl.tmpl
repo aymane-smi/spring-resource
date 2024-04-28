@@ -1,11 +1,14 @@
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.Impl;
 import org.springframework.stereotype.Service;
 
-import {{ .groupId }}.{{ .artifactId }}.controllers.{{ .class }};
-import {{ .groupId }}.{{ .artifactId }}.services.{{ .class }}Service;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.controllers.{{.SharedEntity.Name}}.java;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Service.{{.SharedEntity.Name}}Service.java;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public {{ .class }}ServiceImpl implements {{ .class }}Service{
-    private {{ .class }}Repository {{.class}}Repository;
+public class {{.SharedEntity.Name}}ServiceImpl implements {{.SharedEntity.Name}}Service{
+    private {{.SharedEntity.Name}}Repository {{.SharedEntity.Name}}Repository;
 }

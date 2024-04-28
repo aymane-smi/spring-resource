@@ -19,4 +19,6 @@ func main() {
 	}
 	service.GenerateRepository(*shared)
 	service.GenerateEntity(*shared)
+	service.GenerateService(*shared)
+	service.GenerateServiceImpl(*shared)
 }
