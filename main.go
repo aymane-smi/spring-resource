@@ -9,7 +9,7 @@ func main() {
 	shared := &structs.Shared{
 		SharedEntity: structs.Entity{
 			Name:     "User",
-			TypeId:   1,
+			TypeId:   3,
 			RepoType: "JpaRepository",
 		},
 		SharedPom: structs.Pom{
@@ -21,4 +21,5 @@ func main() {
 	service.GenerateEntity(*shared)
 	service.GenerateService(*shared)
 	service.GenerateServiceImpl(*shared)
+	service.GenerateDto(*shared)
 }

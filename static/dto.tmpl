@@ -1,0 +1,15 @@
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.dto;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+{{if eq .SharedEntity.TypeId 3}}
+import java.util.UUID;
+{{end}}
+
+@Builder
+@Data
+@NoArgsConstructor
+public class {{.SharedEntity.Name}}Dto {
+    private {{if eq .SharedEntity.TypeId 1}}Int{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}} id;
+}
