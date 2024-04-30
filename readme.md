@@ -8,8 +8,10 @@ Spring Resource is a cli tool introduced to help spring developer to generate bo
 
 ## Project structer
 
-## Contributers
+## Contributors
 
 @Creator: aymane-smi
 
 others:
+
+![contributors](https://contrib.rocks/image?repo=aymane-smi/spring-resource)
