@@ -14,7 +14,7 @@ func GenerateDto(shared structs.Shared) (bool, error) {
 	if !utils.GenerateTree("generated/dto") {
 		return false, errors.New("can't create folder or subfolder")
 	}
-	file, errFile := os.Create("generated/dto/" + shared.SharedEntity.Name + ".java")
+	file, errFile := os.Create("generated/dto/" + shared.SharedEntity.Name + "Dto.java")
 	if errFile != nil {
 		return false, errFile
 	}
