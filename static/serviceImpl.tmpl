@@ -1,14 +1,26 @@
 import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.Impl;
 import org.springframework.stereotype.Service;
 
-import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.controllers.{{.SharedEntity.Name}}.java;
-import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Service.{{.SharedEntity.Name}}Service.java;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.exceptions.ResourceNotFoundException;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.models.dto.{{.SharedEntity.Name}}Dto;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.models.entities.{{.SharedEntity.Name}};
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.repositories.{{.SharedEntity.Name}}Repository;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.services.{{.SharedEntity.Name}}Service;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
 public class {{.SharedEntity.Name}}ServiceImpl implements {{.SharedEntity.Name}}Service{
     private {{.SharedEntity.Name}}Repository {{.SharedEntity.Name}}Repository;
+    private ModelMapper modelMapper;
+
+    @Override
+    public {{.SharedEntity.Name}}Dto save({{.SharedEntity.Name}}Dto {{.SharedEntity.NameLower}}Dto) {
+        {{.SharedEntity.Name}} {{.SharedEntity.NameLower}}Request = modelMapper.map({{.SharedEntity.NameLower}}Dto, {{.SharedEntity.Name}}.class);
+        {{.SharedEntity.Name}} {{.SharedEntity.NameLower}} = {{.SharedEntity.NameLower}}Repository.save({{.SharedEntity.NameLower}}Request);
+        return modelMapper.map({{.SharedEntity.NameLower}}, {{.SharedEntity.Name}}Dto.class);
+    }
 }

@@ -17,9 +17,10 @@ func main() {
 			ArtifactId: "demo",
 		},
 	}
-	service.GenerateRepository(*shared)
 	service.GenerateEntity(*shared)
+	service.GenerateDto(*shared)
+	service.GenerateRepository(*shared)
 	service.GenerateService(*shared)
 	service.GenerateServiceImpl(*shared)
-	service.GenerateDto(*shared)
+
 }
