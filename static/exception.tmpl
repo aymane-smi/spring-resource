@@ -1,0 +1,11 @@
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.{{.SharedException.ResponseStatus}})
+public class {{.SharedException.Name}}Exception extends RuntimeException {
+    public {{.SharedException.Name}}Exception(String message) {
+        super(message);
+    }
+}

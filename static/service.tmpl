@@ -11,7 +11,7 @@ public interface {{.SharedEntity.Name}}Service {
 
     void delete({{if eq .SharedEntity.TypeId 1}}Int{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}} id);
 
-    List<{{.SharedEntity.Name}}Dto> getAll();
+    List<{{.SharedEntity.Name}}Dto> findAll();
 
     {{.SharedEntity.Name}}Dto findById({{if eq .SharedEntity.TypeId 1}}Int{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}} id);
 
