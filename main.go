@@ -42,6 +42,6 @@ func main() {
 	shared.SharedPom = utils.GenerateProjectInfoMaven(path + "/pom.xml")
 	service.GenerateRepository(*shared, path)
 	service.GenerateEntity(*shared, path)
-	service.GenerateService(*shared)
-	service.GenerateServiceImpl(*shared)
+	service.GenerateService(*shared, path)
+	service.GenerateServiceImpl(*shared, path)
 }
