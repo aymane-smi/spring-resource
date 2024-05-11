@@ -4,6 +4,8 @@ import (
 	"os"
 )
 
+// full path example
+// /Users/macbookair/Desktop/YouStream/demo/src/main/java/com/example/demo
 func GenerateTree(path string) bool {
 	//prototype function
 	//works only on array of two ["path", "subfolder1"]
