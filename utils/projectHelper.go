@@ -37,5 +37,4 @@ func GenerateProjectInfoMaven(path string) structs.Pom {
 		fmt.Println(errArtifact, errGroup)
 	}
 	return structs.Pom{GroupId: string(outputGroup), ArtifactId: string(outputArtifact)}
-
 }
