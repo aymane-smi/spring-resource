@@ -15,7 +15,7 @@ import (
 // 1 for maven
 // 2 for gradle
 func IsJavaProject(path string) (bool, int) {
-	maven, errMaven := os.Stat(path)
+	maven, errMaven := os.Stat(path + "/pom.xml")
 	gradle, errGradle := os.Stat(path)
 	if errMaven != nil || errGradle != nil {
 		return false, 0

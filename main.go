@@ -23,8 +23,6 @@ func main() {
 			ArtifactId: "demo",
 		},
 	}
-	//fmt.Println(utils.IsJavaProject("/Users/macbookair/Desktop/YouStream/demo/pom.xml"))
-	//fmt.Println(utils.GenerateProjectInfoMaven("/Users/macbookair/Desktop/YouStream/demo/pom.xml"))
 	entityType, errEntity := cmd.Execute(1)
 	repositoryType, errRepository := cmd.Execute(2)
 	shared.SharedEntity.TypeId = entityType.(int)
@@ -32,9 +30,11 @@ func main() {
 	if errRepository != nil || errEntity != nil {
 		fmt.Println("error during list generation")
 	}
+	fmt.Print("Entity name:")
+	fmt.Scanf("%s", &shared.SharedEntity.Name)
 	fmt.Printf("project path:")
-	fmt.Scanf("%s", path)
-	isJava, _ := utils.IsJavaProject(path + "/pom.xml")
+	fmt.Scanf("%s", &path)
+	isJava, _ := utils.IsJavaProject(path)
 	if !isJava {
 		fmt.Println("the path is not for java project")
 		os.Exit(1)
@@ -44,4 +44,5 @@ func main() {
 	service.GenerateEntity(*shared, path)
 	service.GenerateService(*shared, path)
 	service.GenerateServiceImpl(*shared, path)
+	fmt.Println("\nall file generated✅ please check the folder =>", path)
 }

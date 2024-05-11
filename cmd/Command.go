@@ -17,7 +17,7 @@ type itemDelegate struct{}
 
 type model struct {
 	choices   list.Model
-	choice    any
+	choice    any `default:"0"`
 	quitting  bool
 	typeModel int
 }
@@ -55,8 +55,12 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 func (i item) FilterValue() string { return "" }
 
 func (m model) View() string {
-	if m.choice != 0 {
-		return quitTextStyle.Render(fmt.Sprintf("you choiced %s", m.choice))
+	if m.choice != nil {
+		if m.typeModel == 2 {
+			return quitTextStyle.Render(fmt.Sprintf("you choiced %s", m.choice))
+		} else if m.typeModel == 1 {
+			return quitTextStyle.Render(fmt.Sprintf("you choiced %d", m.choice))
+		}
 	}
 	if m.quitting {
 		return quitTextStyle.Render("exit?, no more generation now.")
@@ -120,7 +124,12 @@ func Execute(option int) (any, error) {
 		}
 	}
 	l := list.New(items, itemDelegate{}, 20, 14)
-	l.Title = "Choose entity id type?"
+	l.Title = "test"
+	if option == 1 {
+		l.Title = "Choose entity id type?"
+	} else if option == 2 {
+		l.Title = "Choose repository interface type?"
+	}
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)
 	m := model{choices: l, typeModel: option}
