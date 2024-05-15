@@ -8,9 +8,12 @@ import (
 	service "github.com/aymane-smi/spring-resource/services"
 	"github.com/aymane-smi/spring-resource/structs"
 	"github.com/aymane-smi/spring-resource/utils"
+	"github.com/common-nighthawk/go-figure"
 )
 
 func main() {
+	newFigure := figure.NewFigure("Spring Resource", "", true)
+	newFigure.Print()
 	var path string
 	shared := &structs.Shared{
 		SharedEntity: structs.Entity{
