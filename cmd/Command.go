@@ -120,7 +120,6 @@ func Execute(option int) (any, error) {
 		items = []list.Item{
 			item("JpaRepository"),
 			item("CrudRepository"),
-			item("Repository"),
 		}
 	}
 	l := list.New(items, itemDelegate{}, 20, 14)
