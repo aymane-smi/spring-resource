@@ -15,17 +15,7 @@ func main() {
 	newFigure := figure.NewFigure("Spring Resource", "", true)
 	newFigure.Print()
 	var path string
-	shared := &structs.Shared{
-		SharedEntity: structs.Entity{
-			Name:     "",
-			TypeId:   1,
-			RepoType: "JpaRepository",
-		},
-		SharedPom: structs.Pom{
-			GroupId:    "com.example",
-			ArtifactId: "demo",
-		},
-	}
+	shared := &structs.Shared{}
 	entityType, errEntity := cmd.Execute(1)
 	repositoryType, errRepository := cmd.Execute(2)
 	shared.SharedEntity.TypeId = entityType.(int)
@@ -37,12 +27,16 @@ func main() {
 	fmt.Scanf("%s", &shared.SharedEntity.Name)
 	fmt.Printf("project path:")
 	fmt.Scanf("%s", &path)
-	isJava, _ := utils.IsJavaProject(path)
+	isJava, typeOfManager := utils.IsJavaProject(path)
 	if !isJava {
 		fmt.Println("the path is not for java project")
 		os.Exit(1)
 	}
-	shared.SharedPom = utils.GenerateProjectInfoMaven(path + "/pom.xml")
+	if typeOfManager == 1 {
+
+	} else {
+		shared.SharedPom = utils.GenerateProjectInfoGradle(path)
+	}
 	service.GenerateRepository(*shared, path)
 	service.GenerateEntity(*shared, path)
 	service.GenerateService(*shared, path)
