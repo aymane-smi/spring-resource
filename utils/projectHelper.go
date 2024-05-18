@@ -2,9 +2,11 @@ package utils
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/aymane-smi/spring-resource/structs"
 )
@@ -46,42 +48,49 @@ func GenerateProjectInfoGradle(path string) structs.Pom {
 	fmt.Fprintf(&gradle, "-q -p %s properties", path)
 	groupCmds := []string{
 		gradle.String(),
-		"'^group:'",
-		"'{print $2}'",
+		"^group:",
+		"{print $2}",
 	}
 	nameCmds := []string{
 		gradle.String(),
-		"'^name:'",
-		"'{print $2}'",
+		"^name:",
+		"{print $2}",
 	}
 	outputName, errName := pipeHelper(nameCmds...)
 	outputGroup, errGroup := pipeHelper(groupCmds...)
 	if errName != nil || errGroup != nil {
+		fmt.Println(string(outputName), string(outputGroup))
 		fmt.Println("erro ==>", errName, errGroup)
 		os.Exit(1)
 	}
 	return structs.Pom{
-		GroupId:    string(outputGroup),
-		ArtifactId: string(outputName),
+		GroupId:    strings.TrimSpace(string(outputGroup)),
+		ArtifactId: strings.TrimSpace(string(outputName)),
 	}
 }
 
-// write a helper for multiple pipe commands
+// write a helper for multiple pipe commands (gradle case)
 // assuming that len(commands) = 3
 func pipeHelper(commands ...string) ([]byte, error) {
+	var buffer bytes.Buffer
+	var err bytes.Buffer
 	//init
-	gradle := exec.Command("gradle", commands[0])
+	gradle := exec.Command("gradle", strings.Split(commands[0], " ")...)
 	grep := exec.Command("grep", commands[1])
 	awk := exec.Command("awk", commands[2])
 	//swap rw
 	grep.Stdin, _ = gradle.StdoutPipe()
 	awk.Stdin, _ = grep.StdoutPipe()
-	awk.Stdout = os.Stdout
+	awk.Stdout = &buffer
+	awk.Stderr = &err
 	//run and wait
 	_ = awk.Start()
 	_ = grep.Start()
 	_ = gradle.Run()
-	_ = grep.Wait()
 	_ = awk.Wait()
-	return awk.Output()
+	_ = grep.Wait()
+	if err.Len() != 0 {
+		return nil, errors.New(err.String())
+	}
+	return buffer.Bytes(), nil
 }
