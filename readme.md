@@ -1,5 +1,7 @@
 # Spring Resources
 ```auto generation, happy developer```
+
+## ⚠️ this project is under developement do not use it in production solution ⚠️
 ## Introduction
 
 Spring Resource is a cli tool introduced to help spring developer to generate boilerplate for their resources (repository, entity, service and controller) without any headache within a second.
