@@ -59,8 +59,7 @@ func GenerateProjectInfoGradle(path string) structs.Pom {
 	outputName, errName := pipeHelper(nameCmds...)
 	outputGroup, errGroup := pipeHelper(groupCmds...)
 	if errName != nil || errGroup != nil {
-		fmt.Println(string(outputName), string(outputGroup))
-		fmt.Println("erro ==>", errName, errGroup)
+		fmt.Println("error during gradle info extraction")
 		os.Exit(1)
 	}
 	return structs.Pom{
