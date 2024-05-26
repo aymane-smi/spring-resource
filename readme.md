@@ -8,8 +8,14 @@ Spring Resource is a cli tool introduced to help spring developer to generate bo
 
 ## Examples
  - add docker file to your project using the following flag: `-d` or `--docker`
+ - the show all available command you can use the flag: `-h` or `--help`
 
 ## Project structer
+- `cmd`: folder that contain the logic behind the cli select ui
+- `services`: contain all files that are reponsible about creating `docker`, `dto`, `entity`, `repository` and `service`
+- `static`: contain all template file(.tmpl)
+- `structs`: folder that conatin the strcuture definition like `docker`, `entity`, `pom` and `shard`
+- `utils`: contain all files for helper situation.
 
 ### Supported Docker images for java
 
