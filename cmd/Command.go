@@ -28,7 +28,7 @@ var (
 	selectedItemStyle = lipgloss.NewStyle().PaddingLeft(0).Foreground(lipgloss.Color("170"))
 	//paginationStyle   = list.DefaultStyles().PaginationStyle.PaddingLeft(4)
 	//helpStyle         = list.DefaultStyles().HelpStyle.PaddingLeft(4).PaddingBottom(1)
-	quitTextStyle = lipgloss.NewStyle().Margin(1, 0, 2, 4)
+	quitTextStyle = lipgloss.NewStyle().Margin(1, 0, 2, 4).Foreground(lipgloss.Color("#04B575"))
 )
 
 func (d itemDelegate) Height() int                             { return 1 }
@@ -57,9 +57,13 @@ func (i item) FilterValue() string { return "" }
 func (m model) View() string {
 	if m.choice != nil {
 		if m.typeModel == 2 {
-			return quitTextStyle.Render(fmt.Sprintf("you choiced %s", m.choice))
+			return quitTextStyle.Render(fmt.Sprintf("you choiced id type"))
 		} else if m.typeModel == 1 {
-			return quitTextStyle.Render(fmt.Sprintf("you choiced %d", m.choice))
+			return quitTextStyle.Render(fmt.Sprintf("you choiced repository type"))
+		} else if m.typeModel == 3 {
+			return quitTextStyle.Render(fmt.Sprintf("you choiced java image"))
+		} else if m.typeModel == 4 {
+			return quitTextStyle.Render(fmt.Sprintf("you choiced image tag"))
 		}
 	}
 	if m.quitting {
@@ -93,6 +97,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 			} else if ok && m.typeModel == 2 {
 				m.choice = string(i)
+			} else if ok && m.typeModel == 3 {
+				m.choice = string(i)
+			} else if ok && m.typeModel == 4 {
+				m.choice = string(i)
 			}
 			return m, tea.Quit
 		}
@@ -108,7 +116,7 @@ func (m model) Init() tea.Cmd {
 
 // option 1 for entity generation
 // option 2 for repository generation
-func Execute(option int) (any, error) {
+func Execute(option int, extraInfo int) (any, error) {
 	var items []list.Item
 	if option == 1 {
 		items = []list.Item{
@@ -120,15 +128,32 @@ func Execute(option int) (any, error) {
 		items = []list.Item{
 			item("JpaRepository"),
 			item("CrudRepository"),
-			item("Repository"),
+		}
+	} else if option == 3 {
+		items = []list.Item{
+			item("openjdk"),
+			item("eclipse-temurin"),
+		}
+	} else if option == 4 && extraInfo == 1 {
+		items = []list.Item{
+			item("23-jdk-oracle"),
+			item("17-jdk-oracle"),
+		}
+	} else if option == 4 && extraInfo == 2 {
+		items = []list.Item{
+			item("17-jdk-focal"),
+			item("8-jdk-focal"),
 		}
 	}
 	l := list.New(items, itemDelegate{}, 20, 14)
-	l.Title = "test"
 	if option == 1 {
 		l.Title = "Choose entity id type?"
 	} else if option == 2 {
 		l.Title = "Choose repository interface type?"
+	} else if option == 3 {
+		l.Title = "Choose java image version?"
+	} else if option == 4 {
+		l.Title = "Choose java image tag?"
 	}
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)

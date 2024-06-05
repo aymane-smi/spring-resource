@@ -1,6 +1,7 @@
 package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Repositories;
-import org.springframework.data.jpa.repository.{{.SharedEntity.RepoType}};
+import org.springframework.stereotype.Repository;
+{{if eq .SharedEntity.RepoType "JpaRepository"}}import org.springframework.data.jpa.repository.JpaRepository;{{else if eq .SharedEntity.RepoType "CrudRepository"}}import org.springframework.data.repository.CrudRepository;{{end}}
 import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Models.{{.SharedEntity.Name}};
-import java.util.{{if eq .SharedEntity.TypeId 1}}Integer{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}}
+{{if eq .SharedEntity.TypeId 3}}import java.util.UUID;{{end}}
 @Repository
 public interface {{.SharedEntity.Name}}Repository extends {{.SharedEntity.RepoType}}<{{.SharedEntity.Name}}, {{if eq .SharedEntity.TypeId 1}}Integer{{else if eq .SharedEntity.TypeId 2}}Long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}}>{}
