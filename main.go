@@ -81,8 +81,8 @@ Options:
 		}
 		service.GenerateRepository(*shared, path, templType)
 		service.GenerateEntity(*shared, path, templType)
-		service.GenerateService(*shared, path)
-		service.GenerateServiceImpl(*shared, path)
+		service.GenerateService(*shared, path, templType)
+		service.GenerateServiceImpl(*shared, path, templType)
 		fmt.Println("\nall file generated✅ please check the folder =>", path)
 	}
 }
