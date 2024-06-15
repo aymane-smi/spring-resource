@@ -1,0 +1,25 @@
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;{{if eq .SharedEntity.TypeId 3}}
+import java.util.UUID;{{end}}
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+data class {{.SharedEntity.Name}}(
+    @Id{{if eq .SharedEntity.TypeId 3}}
+    @GeneratedValue(strategy = GenerationType.UUID){{else}}
+    @GeneratedValue(strategy = GenerationType.IDENTITY){{end}}
+    private val {{if eq .SharedEntity.TypeId 1}}int{{else if eq .SharedEntity.TypeId 2}}long{{else if eq .SharedEntity.TypeId 3}}UUID{{end}} id
+)

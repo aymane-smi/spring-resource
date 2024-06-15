@@ -1,0 +1,14 @@
+package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.Impl;
+import org.springframework.stereotype.Service;
+
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.{{.SharedEntity.Name}}Service;
+import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Repositories.{{.SharedEntity.Name}}Repository;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+@NoArgsConstructor
+class {{.SharedEntity.Name}}ServiceImpl(
+    private val {{.SharedEntity.Name}}Repository {{.SharedEntity.Name}}Repository
+) : {{.SharedEntity.Name}}Service

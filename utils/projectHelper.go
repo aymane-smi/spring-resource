@@ -12,19 +12,22 @@ import (
 )
 
 // check if the given path is for java project (maven/gradle)
-// return boolean in case of success
+// return boolean in case of success or failure
 // also return int value(0,1,2)
 // 0 for non java project
 // 1 for maven
 // 2 for gradle
-func IsJavaProject(path string) (bool, int) {
+func IsJavaOrKotlinProject(path string) (bool, int) {
 	maven, errMaven := os.Stat(path + "/pom.xml")
-	gradle, errGradle := os.Stat(path + "/build.gradle")
-	if errMaven != nil && errGradle != nil {
+	gradleJava, errGradleJava := os.Stat(path + "/build.gradle")
+	gradleKotlin, errGradleKotlin := os.Stat(path + "/build.gradle.kts")
+	if errMaven != nil && errGradleJava != nil && errGradleKotlin != nil {
 		return false, 0
 	} else if maven != nil {
 		return true, 1
-	} else if gradle != nil {
+	} else if gradleJava != nil {
+		return true, 2
+	} else if gradleKotlin != nil {
 		return true, 2
 	}
 	return false, 0
@@ -92,4 +95,24 @@ func pipeHelper(commands ...string) ([]byte, error) {
 		return nil, errors.New(err.String())
 	}
 	return buffer.Bytes(), nil
+}
+
+// check if the gardle project use java or kotlin
+// return boolean in case of success or failure
+// true, 1 for java
+// true,2 for kotlin
+// in case of ailure false, 0
+
+func GradleLanguage(path string) (bool, int) {
+	pathJava, errorJava := os.Stat(path + "/src/main/java")
+	pathKotlin, errorKotlin := os.Stat(path + "/src/main/kotlin")
+	if errorJava != nil && errorKotlin != nil {
+		return false, 0
+	}
+	if pathJava != nil {
+		return true, 1
+	} else if pathKotlin != nil {
+		return true, 2
+	}
+	return false, 0
 }
