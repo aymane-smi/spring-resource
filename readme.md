@@ -13,7 +13,7 @@ Spring Resource is a cli tool introduced to help spring developer to generate bo
 ## Project structer
 - `cmd`: folder that contain the logic behind the cli select ui
 - `services`: contain all files that are reponsible about creating `docker`, `dto`, `entity`, `repository` and `service`
-- `static`: contain all template file(.tmpl)
+- `static`: contain all template file(.tmpl) for docker, java and kotlin files
 - `structs`: folder that conatin the strcuture definition like `docker`, `entity`, `pom` and `shard`
 - `utils`: contain all files for helper situation.
 

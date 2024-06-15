@@ -15,11 +15,11 @@ func GenerateRepository(shared structs.Shared, path string, templType int) (bool
 	var folderName, extension string
 
 	if templType == 1 {
-		tmpl, _ = template.ParseFiles("static/entity.tmpl")
+		tmpl, _ = template.ParseFiles("static/repository.tmpl")
 		folderName = "java"
 		extension = ".java"
 	} else {
-		tmpl, _ = template.ParseFiles("static/kotlin/entity.tmpl")
+		tmpl, _ = template.ParseFiles("static/kotlin/repository.tmpl")
 		folderName = "kotlin"
 		extension = ".kt"
 	}
@@ -27,7 +27,7 @@ func GenerateRepository(shared structs.Shared, path string, templType int) (bool
 	if !utils.GenerateTree(path + "/src/main/" + folderName + "/" + pomToPath + shared.SharedPom.ArtifactId + "/Repositories") {
 		return false, errors.New("can't create folder or subfolder")
 	}
-	file, errFile := os.Create(path + "/src/main/" + folderName + "/" + pomToPath + shared.SharedPom.ArtifactId + "/Models/" + shared.SharedEntity.Name + "Repository" + extension)
+	file, errFile := os.Create(path + "/src/main/" + folderName + "/" + pomToPath + shared.SharedPom.ArtifactId + "/Repositories/" + shared.SharedEntity.Name + "Repository" + extension)
 	if errFile != nil {
 		return false, errFile
 	}
