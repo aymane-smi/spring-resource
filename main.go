@@ -15,6 +15,7 @@ func main() {
 	newFigure := figure.NewFigure("Spring Resource", "", true)
 	newFigure.Print()
 	var path string
+	var templType int = 1
 	shared := &structs.Shared{}
 	osArgs := os.Args
 	if len(osArgs) > 1 {
@@ -61,20 +62,27 @@ Options:
 		fmt.Scanf("%s", &shared.SharedEntity.Name)
 		fmt.Printf("project path:")
 		fmt.Scanf("%s", &path)
-		isJava, typeOfManager := utils.IsJavaProject(path)
-		if !isJava {
-			fmt.Println("the path is not for java project")
+		isProject, typeOfManager := utils.IsJavaOrKotlinProject(path)
+		if !isProject {
+			fmt.Println("the path is not for java nor kotlin project")
 			os.Exit(1)
 		}
 		if typeOfManager == 1 {
-
+			shared.SharedPom = utils.GenerateProjectInfoMaven(path)
 		} else {
 			shared.SharedPom = utils.GenerateProjectInfoGradle(path)
+			result, language := utils.GradleLanguage(path)
+			if !result {
+				fmt.Println("error during the detection of the project language")
+				os.Exit(1)
+			} else {
+				templType = language
+			}
 		}
-		service.GenerateRepository(*shared, path)
-		service.GenerateEntity(*shared, path)
-		service.GenerateService(*shared, path)
-		service.GenerateServiceImpl(*shared, path)
+		service.GenerateRepository(*shared, path, templType)
+		service.GenerateEntity(*shared, path, templType)
+		service.GenerateService(*shared, path, templType)
+		service.GenerateServiceImpl(*shared, path, templType)
 		fmt.Println("\nall file generated✅ please check the folder =>", path)
 	}
 }
