@@ -79,7 +79,7 @@ Options:
 				templType = language
 			}
 		}
-		service.GenerateRepository(*shared, path)
+		service.GenerateRepository(*shared, path, templType)
 		service.GenerateEntity(*shared, path, templType)
 		service.GenerateService(*shared, path)
 		service.GenerateServiceImpl(*shared, path)

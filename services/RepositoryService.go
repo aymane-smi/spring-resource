@@ -10,13 +10,24 @@ import (
 	"github.com/aymane-smi/spring-resource/utils"
 )
 
-func GenerateRepository(shared structs.Shared, path string) (bool, error) {
-	tmpl, _ := template.ParseFiles("static/repository.tmpl")
+func GenerateRepository(shared structs.Shared, path string, templType int) (bool, error) {
+	var tmpl *template.Template
+	var folderName, extension string
+
+	if templType == 1 {
+		tmpl, _ = template.ParseFiles("static/entity.tmpl")
+		folderName = "java"
+		extension = ".java"
+	} else {
+		tmpl, _ = template.ParseFiles("static/kotlin/entity.tmpl")
+		folderName = "kotlin"
+		extension = ".kt"
+	}
 	pomToPath := strings.ReplaceAll(shared.SharedPom.GroupId, ".", "/") + "/"
-	if !utils.GenerateTree(path + "/src/main/java/" + pomToPath + shared.SharedPom.ArtifactId + "/Repositories") {
+	if !utils.GenerateTree(path + "/src/main/" + folderName + "/" + pomToPath + shared.SharedPom.ArtifactId + "/Repositories") {
 		return false, errors.New("can't create folder or subfolder")
 	}
-	file, errFile := os.Create(path + "/src/main/java/" + pomToPath + shared.SharedPom.ArtifactId + "/Repositories/" + shared.SharedEntity.Name + "Repository.java")
+	file, errFile := os.Create(path + "/src/main/" + folderName + "/" + pomToPath + shared.SharedPom.ArtifactId + "/Models/" + shared.SharedEntity.Name + "Repository" + extension)
 	if errFile != nil {
 		return false, errFile
 	}
