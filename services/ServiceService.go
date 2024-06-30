@@ -42,7 +42,9 @@ func GenerateServiceImpl(shared structs.Shared, path string, templType int) (boo
 	var folderName, extension string
 
 	if templType == 1 {
-		tmpl, _ = template.ParseFiles("static/serviceImpl.tmpl")
+		tmpl, _ = template.New("service").Funcs(template.FuncMap{
+			"UnCapitalized": utils.Uncapitalized,
+		}).ParseFiles("static/serviceImpl.tmpl")
 		folderName = "java"
 		extension = ".java"
 	} else {

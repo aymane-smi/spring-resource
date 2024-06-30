@@ -1,5 +1,6 @@
 package {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.Impl;
 import org.springframework.stereotype.Service;
+{{if eq .Injection "AUTO"}}import org.springframework.beans.factory.annotation.Autowired;{{end}}
 
 import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Services.{{.SharedEntity.Name}}Service;
 import {{.SharedPom.GroupId}}.{{.SharedPom.ArtifactId}}.Repositories.{{.SharedEntity.Name}}Repository;
@@ -7,8 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+{{if eq .Injection "CONST"}}@AllArgsConstructor{{end}}
 @NoArgsConstructor
 public class {{.SharedEntity.Name}}ServiceImpl implements {{.SharedEntity.Name}}Service{
-    private {{.SharedEntity.Name}}Repository {{.SharedEntity.Name}}Repository;
+    {{if eq .Injection "AUTO"}}@Autowired{{end}}
+    private {{.SharedEntity.Name}}Repository {{.SharedEntity.Name | UnCapitalized}}Repository;
+
+    public void set{{.SharedEntity.Name}}({{.SharedEntity.Name}}Repository {{.SharedEntity.Name | UnCapitalized}}Repository){
+        this.{{.SharedEntity.Name | UnCapitalized}}Repository = {{.SharedEntity.Name | UnCapitalized}}Repository
+    }
 }

@@ -8,7 +8,8 @@ Spring Resource is a cli tool introduced to help spring developer to generate bo
 
 ## Examples
  - add docker file to your project using the following flag: `-d` or `--docker`
- - the show all available command you can use the flag: `-h` or `--help`
+ - that show all available command you can use the flag: `-h` or `--help`
+ - specify the injection during the generation (setter, autowired, constructor): `-i=TYPE` or `--inject=TYPE`
 
 ## Project structer
 - `cmd`: folder that contain the logic behind the cli select ui

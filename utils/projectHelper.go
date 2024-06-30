@@ -7,9 +7,12 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"unicode"
 
 	"github.com/aymane-smi/spring-resource/structs"
 )
+
+var INJECT_VALUE = [3]string{"CONST", "AUTO", "SET"}
 
 // check if the given path is for java project (maven/gradle)
 // return boolean in case of success or failure
@@ -115,4 +118,40 @@ func GradleLanguage(path string) (bool, int) {
 		return true, 2
 	}
 	return false, 0
+}
+
+// check if injection value exist in the defined array of values
+
+func CheckInjectValue(value string) bool {
+	if value == "" {
+		return false
+	}
+	for _, v := range INJECT_VALUE {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
+// or function for string
+
+func OrStr(str1, str2 string) string {
+	if str1 != "" {
+		return str1
+	}
+	return str2
+}
+
+//Uncapitalized a string
+
+func Uncapitalized(s string) string {
+	if s == "" {
+		return s
+	}
+	r := []rune(s)
+	if unicode.IsUpper(r[0]) {
+		r[0] = unicode.ToLower(r[0])
+	}
+	return string(r)
 }
